@@ -1,4 +1,4 @@
-// use 'strict';
+'use strict';
 
 var hoursOfDay = [
   '6:00am',
@@ -32,12 +32,15 @@ var pikePlace = {
   totalCust: null,
   cupsEachHour: [ ],
   totalCups: null,
-  beansToGO: [ ],
+  beansToGo: [ ],
   totalBeansToGo: null,
+  poundPackages: null,
   beansForCups: [ ],
   totalBeansForCups: null,
+  totalBeansPerHour: [ ],
   totalBeansDelivered: null,
   employeesPerHour: [ ],
+  stringForOutput: [ ],
   forecastCustomers: function(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
   },
@@ -56,29 +59,37 @@ var pikePlace = {
       this.cupsEachHour.push(this.custEachHour[k] * this.custCupConsumption);
     }
   },
-  totalCups: function() {
+  totalCupsPerDay: function() {
     for (var l = 0; l < hoursOfDay.length; l++) {
       this.totalCups += this.cupsEachHour[l];
     }
   },
   howManyPounds: function() {
     for (var m = 0; m < hoursOfDay.length; m++) {
-      this.beansToGO.push(this.custEachHour[m] * this.custToGoConsumption);
+      this.beansToGo.push(this.custEachHour[m] * this.custToGoConsumption);
     }
   },
   totalToGoBeans: function() {
     for (var n = 0; n < hoursOfDay.length; n++) {
-      this.totalBeansToGo += this.beansToGO[n];
+      this.totalBeansToGo += this.beansToGo[n];
     }
+  },
+  packagesOfToGoBeans: function() {
+    this.poundPackages = (this.totalBeansToGo/16);
   },
   beansPerHourCups: function() {
     for (var p = 0; p < hoursOfDay.length; p++) {
-      this.beansForCups.push((this.cupsEachHour[p] / 16).toFixed(1));
+      this.beansForCups.push((this.cupsEachHour[p] / 16));
     }
   },
   howManyBeansForCupsTotal: function() {
     for (var q = 0; q < hoursOfDay.length; q++) {
       this.totalBeansForCups += this.beansForCups[q];
+    }
+  },
+  howManyBeansPerHour: function() {
+    for (var t = 0; t < hoursOfDay.length; t++) {
+      this.totalBeansPerHour.push((this.beansToGo[t] + this.beansForCups[t]));
     }
   },
   howManyEmployees: function() {
@@ -87,15 +98,32 @@ var pikePlace = {
     }
   },
   howManyBeansToBring: function() {
-    this.totalBeansDelivered = (this.totalBeansToGo + this.totalBeansForCups).toFixed(1);
-  }
+    this.totalBeansDelivered = (this.totalBeansToGo + this.totalBeansForCups);
+  },
+  concatenationForHours: function() {
+    for (var s = 0; s < hoursOfDay.length; s++) {
+      this.stringForOutput.push(hoursOfDay[s] + ': ' + round(this.totalBeansPerHour[s], 1) + ' lbs [' + round(this.custEachHour[s], 0) + ' customers, ' + round(this.cupsEachHour[s], 1) + ' cups (' + round(this.beansForCups[s], 1) + ' lbs), ' + round(this.beansToGo[s], 0) + ' lbs to-go]');
+    }
+    this.stringForOutput.push('Total customers at ' + this.name + ': ' + round(this.totalCust, 0));
+    this.stringForOutput.push('Total cups sold at ' + this.name + ': ' + round(this.totalCups, 0));
+    this.stringForOutput.push('Total to-go pound packages sold at ' + this.name + ': ' + round(this.poundPackages, 0));
+    this.stringForOutput.push('Total pounds of beans needed at ' + this.name + ': ' + round(this.totalBeansDelivered, 1));
+  },
 };
-pikePlace.custAvgHour();
-pikePlace.totalCustomers();
-pikePlace.howManyCups();
-pikePlace.howManyPounds();
-pikePlace.totalToGoBeans();
-pikePlace.beansPerHourCups();
-pikePlace.howManyBeansForCupsTotal();
-pikePlace.howManyEmployees();
-pikePlace.howManyBeansToBring();
+
+var calls = function(location) {
+  location.custAvgHour();
+  location.totalCustomers();
+  location.howManyCups();
+  location.totalCupsPerDay();
+  location.howManyPounds();
+  location.totalToGoBeans();
+  location.packagesOfToGoBeans();
+  location.beansPerHourCups();
+  location.howManyBeansForCupsTotal();
+  location.howManyBeansPerHour();
+  location.howManyEmployees();
+  location.howManyBeansToBring();
+  location.concatenationForHours();
+};
+calls(pikePlace);
