@@ -29,8 +29,10 @@ var pikePlace = {
   cupsEachHour: [ ],
   totalCups: null,
   beansForCups: [ ],
+  totalBeansForCups: null,
   beansToGO: [ ],
-  empolyeeHours: [ ],
+  totalBeansToGO: null,
+  employeesPerHour: [ ],
   forecastCustomers: function(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
   },
@@ -43,8 +45,46 @@ var pikePlace = {
     for (var j = 0; j < hoursOfDay.length; j++) {
       this.totalCust += this.custEachHour[j];
     }
+  },
+  howManyCups: function() {
+    for (var k = 0; k < hoursOfDay.length; k++) {
+      this.cupsEachHour.push(this.custEachHour[k] * this.custCupConsumption);
+    }
+  },
+  totalCups: function() {
+    for (var l = 0; l < hoursOfDay.length; l++) {
+      this.totalCups += this.cupsEachHour[l];
+    }
+  },
+  howManyPounds: function() {
+    for (var m = 0; m < hoursOfDay.length; m++) {
+      this.beansToGO.push(this.custEachHour[m] * custToGoConsumption);
+    }
+  },
+  totalToGoBeans: function() {
+    for (var n = 0; n < hoursOfDay.length; n++) {
+      this.totalBeansToGO += this.beansToGO[n];
+    }
+  },
+  beansPerHourCups: function() {
+    for (var p = 0; p < hoursOfDay.length; p++) {
+      this.beansForCups.push(this.cupsEachHour[p] / 16).toFixed(1);
+    }
+  },
+  howManyBeansForCupsTotal: function() {
+    for (var q = 0; q < hoursOfDay.length; q++) {
+      this.totalBeansForCups += this.beansForCups[q];
+    }
+  },
+  howManyEmployees: function() {
+    for (var r = 0; r < hoursOfDay.length; r++) {
+      this.employeesPerHour.push(Math.ceil(this.custEachHour[r] / 30));
+    }
   }
-}
+};
 pikePlace.custAvgHour();
 pikePlace.totalCustomers();
-console.log(pikePlace.totalCust);
+pikePlace.howManyCups();
+pikePlace.beansPerHourCups();
+pikePlace.howManyBeansForCupsTotal();
+pikePlace.howManyEmployees();
