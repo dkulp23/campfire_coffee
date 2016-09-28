@@ -41,6 +41,8 @@ var pikePlace = {
   totalBeansDelivered: null,
   employeesPerHour: [ ],
   stringForOutput: [ ],
+  hourlyDataStringEl: document.getElementById('kiosks'),
+  ulEl: document.createElement('ul'),
   forecastCustomers: function(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
   },
@@ -109,6 +111,16 @@ var pikePlace = {
     this.stringForOutput.push('Total to-go pound packages sold at ' + this.name + ': ' + round(this.poundPackages, 0));
     this.stringForOutput.push('Total pounds of beans needed at ' + this.name + ': ' + round(this.totalBeansDelivered, 1));
   },
+  createLiElFromString: function() {
+    for (var t = 0; t < this.stringForOutput.length; t++) {
+      var liEl = document.createElement('li');
+      liEl.textContent = this.stringForOutput[t];
+      this.ulEl.appendChild(liEl);
+    }
+  },
+  renderDataInDOM: function() {
+    this.hourlyDataStringEl.appendChild(this.ulEl);
+  },
 };
 
 var calls = function(location) {
@@ -125,5 +137,7 @@ var calls = function(location) {
   location.howManyEmployees();
   location.howManyBeansToBring();
   location.concatenationForHours();
+  location.createLiElFromString();
+  location.renderDataInDOM();
 };
 calls(pikePlace);
