@@ -164,6 +164,14 @@ function makeFirstRow() {
   var dailyLocationTotalEl = document.createElement('th');
   dailyLocationTotalEl.textContent = 'Daily Location Total';
   headerRowEl.appendChild(dailyLocationTotalEl);
+  var openHoursEl = function() {
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      var hoursCellEl = document.createElement('th');
+      hoursCellEl.textContent = hoursOfDay[i];
+      headerRowEl.appendChild(hoursCellEl);
+    }
+  }
+  openHoursEl();
   tableEl.appendChild(headerRowEl);
 }
 makeFirstRow();
