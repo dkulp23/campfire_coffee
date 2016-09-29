@@ -1,0 +1,34 @@
+body {
+  background-color: #78b3a5;
+}
+
+header {
+  width: 550px;
+  margin: 0 auto;
+  padding: 0px 0px 10px 0px;
+}
+
+a {
+  text-decoration: none;
+  color: #e3cda9;
+}
+
+figcaption {
+  text-align: center;
+}
+
+section {
+  font-family: 'Cabin Sketch', cursive;
+  width: 550px;
+  margin: 0 auto;
+}
+
+h3 {
+  width: 550px;
+  text-align: center;
+  color: #9a0008;
+}
+
+li {
+  color: ##9b721e;
+}
