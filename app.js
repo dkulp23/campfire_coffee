@@ -150,6 +150,21 @@ function makeItAllHappen() {
 };
 
 makeItAllHappen();
+
+function makeTable(idName) {
+  return document.getElementById(idName);
+};
+
+function makeFirstRow() {
+  var tableEl = makeTable('beans');
+  var headerRowEl= document.createElement('tr');
+  var firstCellEl = document.createElement('th');
+  firstCellEl.textContent = 'I am the first cell';
+  headerRowEl.appendChild(firstCellEl);
+  tableEl.appendChild(headerRowEl);
+}
+makeFirstRow();
+
 //   hourlyDataStringEl: document.getElementById('ppm'),
 //   ulEl: document.createElement('ul'),
 
