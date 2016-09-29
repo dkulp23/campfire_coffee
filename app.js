@@ -98,6 +98,7 @@ var pikePlace = {
   howManyEmployees: function() {
     for (var r = 0; r < hoursOfDay.length; r++) {
       this.employeesPerHour.push(Math.ceil(this.custEachHour[r] / 30));
+      // this.employeesPerDay += this.employeesPerHour[i];
     }
   },
   howManyBeansToBring: function() {
