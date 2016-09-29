@@ -40,6 +40,7 @@ var pikePlace = {
   totalBeansPerHour: [ ],
   totalBeansDelivered: null,
   employeesPerHour: [ ],
+  //employeesPerDay: 0,
   stringForOutput: [ ],
   hourlyDataStringEl: document.getElementById('ppm'),
   ulEl: document.createElement('ul'),
