@@ -151,20 +151,31 @@ function makeItAllHappen() {
 
 makeItAllHappen();
 
-function makeTable(idName) {
+function hookTheTable(idName) {
   return document.getElementById(idName);
 };
 
 function makeFirstRow() {
-  var tableEl = makeTable('beans');
+  var tableEl = hookTheTable('beans');
   var headerRowEl= document.createElement('tr');
-  var firstCellEl = document.createElement('th');
-  firstCellEl.textContent = 'I am the first cell';
-  headerRowEl.appendChild(firstCellEl);
+  var blankCellEl = document.createElement('th');
+  blankCellEl.textContent = '';
+  headerRowEl.appendChild(blankCellEl);
+  var dailyLocationTotalEl = document.createElement('th');
+  dailyLocationTotalEl.textContent = 'Daily Location Total';
+  headerRowEl.appendChild(dailyLocationTotalEl);
   tableEl.appendChild(headerRowEl);
 }
 makeFirstRow();
 
+// function makeFirstRow() {
+//   var tableEl = hookTheTable('beans');
+//   var headerRowEl= document.createElement('tr');
+//   var firstCellEl = document.createElement('th');
+//   firstCellEl.textContent = 'I am the first cell';
+//   headerRowEl.appendChild(firstCellEl);
+//   tableEl.appendChild(headerRowEl);
+// }
 //   hourlyDataStringEl: document.getElementById('ppm'),
 //   ulEl: document.createElement('ul'),
 
