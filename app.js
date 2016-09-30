@@ -253,28 +253,10 @@ function createAllStoreStaffRows() {
 };
 createAllStoreStaffRows();
 
-// function makeFirstRow() {
-//   var tableEl = hookTheTable('beans');
-//   var headerRowEl= document.createElement('tr');
-//   var firstCellEl = document.createElement('th');
-//   firstCellEl.textContent = 'I am the first cell';
-//   headerRowEl.appendChild(firstCellEl);
-//   tableEl.appendChild(headerRowEl);
+// function makeAnElementWithText(parent, element, content) {
+//   var getParentElement = document.getElementById(parent);
+//   var makeTheElement = document.createElement(element);
+//   makeTheElement.textContent = content;
+//   getParentElement.appendChild(makeTheElement);
 // }
-//   hourlyDataStringEl: document.getElementById('ppm'),
-//   ulEl: document.createElement('ul'),
-
-//   createLiElFromString: function() {
-//     for (var t = 0; t < this.stringForOutput.length; t++) {
-//       var liEl = document.createElement('li');
-//       liEl.textContent = this.stringForOutput[t];
-//       this.ulEl.appendChild(liEl);
-//     }
-//   },
-//   renderDataInDOM: function() {
-//     this.hourlyDataStringEl.appendChild(this.ulEl);
-//   },
-//   changeNameOfStore: function() {
-//     var shopNameEl = document.getElementById('market');
-//     var displayShopName = this.name;
-//     shopNameEl.textContent = displayShopName;
+// helper('staff', 'tr', 'I am a new table row.');
