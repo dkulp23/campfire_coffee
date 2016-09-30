@@ -198,8 +198,13 @@ function makeStoreCells(storeName) {
   tableEl.appendChild(rowEl)
 }
 makeFirstRow();
-makeStoreCells(allKiosks[0]);
 
+function createAllStoreRows() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    makeStoreCells(allKiosks[i]);
+  }
+};
+createAllStoreRows();
 // function makeFirstRow() {
 //   var tableEl = hookTheTable('beans');
 //   var headerRowEl= document.createElement('tr');
