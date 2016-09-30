@@ -22,10 +22,6 @@ var round = function(num, precision) {
   return parseFloat(num.toFixed(precision));
 };
 
-var unStringify = function (arrayObject) {
-  return parseInt(arrayObject);
-};
-
 var randomInteger = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
@@ -159,7 +155,7 @@ function hookTheTable(idName) {
   return document.getElementById(idName);
 };
 
-function makeFirstRow() {
+function makeFirstBeansRow() {
   var tableEl = hookTheTable('beans');
   var headerRowEl= document.createElement('tr');
   var blankCellEl = document.createElement('th');
@@ -177,27 +173,29 @@ function makeFirstRow() {
   }
   openHoursEl();
   tableEl.appendChild(headerRowEl);
-}
+};
+
 function makeStoreCells(storeName) {
-  var tableEl = hookTheTable('beans');
-  var rowEl = document.createElement('tr');
-  var nameEl = document.createElement('td');
-  nameEl.textContent = storeName.name;
-  rowEl.appendChild(nameEl);
+  var beanTableEl = hookTheTable('beans');
+  var beanRowEl = document.createElement('tr');
+  var beanNameEl = document.createElement('td');
+  beanNameEl.textContent = storeName.name;
+  beanRowEl.appendChild(beanNameEl);
   var locationTotalEl = document.createElement('td');
-  locationTotalEl.textContent = round(unStringify(storeName.totalBeansDelivered), 1);
-  rowEl.appendChild(locationTotalEl);
+  locationTotalEl.textContent = round(storeName.totalBeansDelivered, 1);
+  beanRowEl.appendChild(locationTotalEl);
   var storeHourBeansEl = function() {
     for (var i = 0; i < hoursOfDay.length; i++) {
       var storeHoulyBeansUsedEl = document.createElement('td');
-      storeHoulyBeansUsedEl.textContent = round(unStringify(storeName.beansPerHour[i]), 1);
-      rowEl.appendChild(storeHoulyBeansUsedEl);
+      storeHoulyBeansUsedEl.textContent = round(storeName.beansPerHour[i], 1);
+      beanRowEl.appendChild(storeHoulyBeansUsedEl);
     }
   }
   storeHourBeansEl();
-  tableEl.appendChild(rowEl)
-}
-makeFirstRow();
+  beanTableEl.appendChild(beanRowEl)
+};
+
+makeFirstBeansRow();
 
 function createAllStoreRows() {
   for (var i = 0; i < allKiosks.length; i++) {
@@ -205,6 +203,56 @@ function createAllStoreRows() {
   }
 };
 createAllStoreRows();
+
+function makeFirstStaffRow() {
+  var stafftableEl = hookTheTable('staff');
+  var staffHeaderRowEl= document.createElement('tr');
+  var staffBlankCellEl = document.createElement('th');
+  staffBlankCellEl.textContent = '';
+  staffHeaderRowEl.appendChild(staffBlankCellEl);
+  var dailyTotalEl = document.createElement('th');
+  dailyTotalEl.textContent = 'Total';
+  staffHeaderRowEl.appendChild(dailyTotalEl);
+  var staffOpenHoursEl = function() {
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      var hoursCellEl = document.createElement('th');
+      hoursCellEl.textContent = hoursOfDay[i];
+      staffHeaderRowEl.appendChild(hoursCellEl);
+    }
+  }
+  staffOpenHoursEl();
+  stafftableEl.appendChild(staffHeaderRowEl);
+}
+
+function makeStoreStaffCells(location) {
+  var staffHourlyTableEl = hookTheTable('staff');
+  var staffHourlyRowEl = document.createElement('tr');
+  var staffHourlyNameEl = document.createElement('td');
+  staffHourlyNameEl.textContent = location.name;
+  staffHourlyRowEl.appendChild(staffHourlyNameEl);
+  var totalEl = document.createElement('td');
+  totalEl.textContent = location.employeesPerDay;
+  staffHourlyRowEl.appendChild(totalEl);
+  var storeHourlyStaff = function() {
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      var storeHourlyStaffNeededEl = document.createElement('td');
+      storeHourlyStaffNeededEl.textContent = location.employeesPerHour[i];
+      staffHourlyRowEl.appendChild(storeHourlyStaffNeededEl);
+    }
+  };
+  storeHourlyStaff();
+  staffHourlyTableEl.appendChild(staffHourlyRowEl);
+};
+
+makeFirstStaffRow();
+
+function createAllStoreStaffRows() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    makeStoreStaffCells(allKiosks[i]);
+  }
+};
+createAllStoreStaffRows();
+
 // function makeFirstRow() {
 //   var tableEl = hookTheTable('beans');
 //   var headerRowEl= document.createElement('tr');
