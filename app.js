@@ -140,7 +140,6 @@ var capitolHill = {
   totalCups: null,
   beansToGo: [ ],
   totalBeansToGo: null,
-  poundPackages: null,
   beansForCups: [ ],
   totalBeansForCups: null,
   totalBeansPerHour: [ ],
@@ -182,9 +181,6 @@ var capitolHill = {
       this.totalBeansToGo += this.beansToGo[n];
     }
   },
-  packagesOfToGoBeans: function() {
-    this.poundPackages = (this.totalBeansToGo/16);
-  },
   beansPerHourCups: function() {
     for (var p = 0; p < hoursOfDay.length; p++) {
       this.beansForCups.push((this.cupsEachHour[p] / 16));
@@ -214,7 +210,7 @@ var capitolHill = {
     }
     this.stringForOutput.push('Total customers at ' + this.name + ': ' + round(this.totalCust, 0));
     this.stringForOutput.push('Total cups sold at ' + this.name + ': ' + round(this.totalCups, 0));
-    this.stringForOutput.push('Total to-go pound packages sold at ' + this.name + ': ' + round(this.poundPackages, 0));
+    this.stringForOutput.push('Total to-go pound packages sold at ' + this.name + ': ' + round(this.totalBeansToGo, 0));
     this.stringForOutput.push('Total pounds of beans needed at ' + this.name + ': ' + round(this.totalBeansDelivered, 1));
   },
   createLiElFromString: function() {
