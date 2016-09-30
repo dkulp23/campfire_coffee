@@ -22,6 +22,10 @@ var round = function(num, precision) {
   return parseFloat(num.toFixed(precision));
 };
 
+var unStringify = function (arrayObject) {
+  return parseInt(arrayObject);
+};
+
 var randomInteger = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
@@ -174,7 +178,27 @@ function makeFirstRow() {
   openHoursEl();
   tableEl.appendChild(headerRowEl);
 }
+function makeStoreCells(storeName) {
+  var tableEl = hookTheTable('beans');
+  var rowEl = document.createElement('tr');
+  var nameEl = document.createElement('td');
+  nameEl.textContent = storeName.name;
+  rowEl.appendChild(nameEl);
+  var locationTotalEl = document.createElement('td');
+  locationTotalEl.textContent = round(unStringify(storeName.totalBeansDelivered), 1);
+  rowEl.appendChild(locationTotalEl);
+  var storeHourBeansEl = function() {
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      var storeHoulyBeansUsedEl = document.createElement('td');
+      storeHoulyBeansUsedEl.textContent = round(unStringify(storeName.beansPerHour[i]), 1);
+      rowEl.appendChild(storeHoulyBeansUsedEl);
+    }
+  }
+  storeHourBeansEl();
+  tableEl.appendChild(rowEl)
+}
 makeFirstRow();
+makeStoreCells(allKiosks[0]);
 
 // function makeFirstRow() {
 //   var tableEl = hookTheTable('beans');
