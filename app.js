@@ -100,13 +100,13 @@ Kiosk.prototype.beansForCupsDay = function() {
 
 Kiosk.prototype.howManyBeansPerHour = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
-    this.beansPerHour.push(this.lbsPerHour[i] + this.cupBeansPerHour[i]);
+    this.beansPerHour.push(round(this.lbsPerHour[i] + this.cupBeansPerHour[i], 1));
   }
 };
 
 Kiosk.prototype.howManyBeansDelivered = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
-    this.totalBeansDelivered += this.beansPerHour[i];
+    this.totalBeansDelivered += round(this.beansPerHour[i], 1);
   }
 };
 
@@ -165,41 +165,54 @@ function makeAnElementWithText(parent, element, content) {
   parent.appendChild(makeTheElement);
 }
 
-function loopForTableText(whichArray, parent, element, content) {
-  for (var i = 0; i < whichArray.length; i++) {
+function loopForTableText(parent, element, content) {
+  for (var i = 0; i < hoursOfDay.length; i++) {
     makeAnElementWithText(parent, element, content[i]);
   }
 }
 
-function makeTheTable() {
-  var tableEl = hookTheTable('beans');
+function makeTheFirstRow(idName, tContent1, tContent2, tContent3) {
+  var tableEl = hookTheTable(idName);
   var rowEl = createParentElement('tr');
-  makeAnElementWithText(rowEl, 'th', ' ');
-  makeAnElementWithText(rowEl, 'th', 'Daily Location Total');
-  loopForTableText(hoursOfDay, rowEl, 'th', hoursOfDay);
+  makeAnElementWithText(rowEl, 'th', tContent1);
+  makeAnElementWithText(rowEl, 'th', tContent2);
+  loopForTableText(rowEl, 'th', tContent3);
   tableEl.appendChild(rowEl);
 }
 
-makeTheTable();
-// function makeFirstBeansRow() {
-//   var tableEl = hookTheTable('beans'); //first parameter - name of element to hook
-//   var headerRowEl= document.createElement('tr'); //second parameter - type of parent element to be created
-//   var blankCellEl = document.createElement('th'); //third parameter - type of child element to be created
-//   blankCellEl.textContent = ''; //fourth parameter - text content for child element
-//   headerRowEl.appendChild(blankCellEl); //no parameter - appending cell to row
-//   var dailyLocationTotalEl = document.createElement('th'); //creating second cell child element
-//   dailyLocationTotalEl.textContent = 'Daily Location Total'; //text content for second child element
-//   headerRowEl.appendChild(dailyLocationTotalEl); //appending second cell to row
-//   var openHoursEl = function() {
-//     for (var i = 0; i < hoursOfDay.length; i++) {
-//       var hoursCellEl = document.createElement('th'); //third
-//       hoursCellEl.textContent = hoursOfDay[i];
-//       headerRowEl.appendChild(hoursCellEl);
-//     }
+
+// function makeTheStoreRows(idName, storeName) {
+//   return makeTheFirstRow(idName, 'storeName.name', 'storeName.totalBeansDelivered', 'storeName.beansPerHour');
 //   }
-//   openHoursEl();
-//   tableEl.appendChild(headerRowEl);
-// };
+// }
+//
+// function makeTheStaffRows(idName, storeName) {
+//   return makeTheFirstRow(idName, 'storeName.name', 'storename.employeesPerDay', 'storeName.employeesPerHour')
+// }
+//
+// function createAllStoreStaffRows() {
+//   for (var i = 0; i < allKiosks.length; i++) {
+//     makeTheStoreRows(allKiosks[i]);
+//
+makeTheFirstRow('beans', ' ', 'Daily Location Total', hoursOfDay);
+
+function makeTheStoreRows() {
+  for (var i = 0; i < allKiosks.length; i++) {
+  makeTheFirstRow('beans', allKiosks[i].name, allKiosks[i].totalBeansDelivered, allKiosks[i].beansPerHour);
+  }
+}
+
+makeTheStoreRows();
+
+makeTheFirstRow('staff', ' ', 'Total', hoursOfDay);
+
+function makeTheStaffRows() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    makeTheFirstRow('staff', allKiosks[i].name, allKiosks[i].employeesPerDay, allKiosks[i].employeesPerHour)
+  }
+}
+
+makeTheStaffRows();
 
 // function makeStoreCells(storeName) {
 //   var beanTableEl = hookTheTable('beans');
@@ -213,7 +226,7 @@ makeTheTable();
 //   var storeHourBeansEl = function() {
 //     for (var i = 0; i < hoursOfDay.length; i++) {
 //       var storeHoulyBeansUsedEl = document.createElement('td');
-//       storeHoulyBeansUsedEl.textContent = round(storeName.beansPerHour[i], 1);
+//       storeHoulyBeansUsedEl.textContent = storeName.beansPerHour[i];
 //       beanRowEl.appendChild(storeHoulyBeansUsedEl);
 //     }
 //   }
@@ -221,60 +234,37 @@ makeTheTable();
 //   beanTableEl.appendChild(beanRowEl)
 // };
 
-function createAllStoreRows() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    makeStoreCells(allKiosks[i]);
-  }
-};
-createAllStoreRows();
-
-function makeFirstStaffRow() {
-  var stafftableEl = hookTheTable('staff');
-  var staffHeaderRowEl= document.createElement('tr');
-  var staffBlankCellEl = document.createElement('th');
-  staffBlankCellEl.textContent = '';
-  staffHeaderRowEl.appendChild(staffBlankCellEl);
-  var dailyTotalEl = document.createElement('th');
-  dailyTotalEl.textContent = 'Total';
-  staffHeaderRowEl.appendChild(dailyTotalEl);
-  var staffOpenHoursEl = function() {
-    for (var i = 0; i < hoursOfDay.length; i++) {
-      var hoursCellEl = document.createElement('th');
-      hoursCellEl.textContent = hoursOfDay[i];
-      staffHeaderRowEl.appendChild(hoursCellEl);
-    }
-  }
-  staffOpenHoursEl();
-  stafftableEl.appendChild(staffHeaderRowEl);
-}
-
-function makeStoreStaffCells(location) {
-  var staffHourlyTableEl = hookTheTable('staff');
-  var staffHourlyRowEl = document.createElement('tr');
-  var staffHourlyNameEl = document.createElement('td');
-  staffHourlyNameEl.textContent = location.name;
-  staffHourlyRowEl.appendChild(staffHourlyNameEl);
-  var totalEl = document.createElement('td');
-  totalEl.textContent = location.employeesPerDay;
-  staffHourlyRowEl.appendChild(totalEl);
-  var storeHourlyStaff = function() {
-    for (var i = 0; i < hoursOfDay.length; i++) {
-      var storeHourlyStaffNeededEl = document.createElement('td');
-      storeHourlyStaffNeededEl.textContent = location.employeesPerHour[i];
-      staffHourlyRowEl.appendChild(storeHourlyStaffNeededEl);
-    }
-  };
-  storeHourlyStaff();
-  staffHourlyTableEl.appendChild(staffHourlyRowEl);
-};
-
-makeFirstStaffRow();
-
-function createAllStoreStaffRows() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    makeStoreStaffCells(allKiosks[i]);
-  }
-};
-createAllStoreStaffRows();
+// function createAllStoreRows() {
+//   for (var i = 0; i < allKiosks.length; i++) {
+//     makeStoreCells(allKiosks[i]);
+//   }
+// };
+// createAllStoreRows();
+//
+//
+// function makeStoreStaffCells(location) {
+//   var staffHourlyTableEl = hookTheTable('staff');
+//   var staffHourlyRowEl = document.createElement('tr');
+//   var staffHourlyNameEl = document.createElement('td');
+//   staffHourlyNameEl.textContent = location.name;
+//   staffHourlyRowEl.appendChild(staffHourlyNameEl);
+//   var totalEl = document.createElement('td');
+//   totalEl.textContent = location.employeesPerDay;
+//   staffHourlyRowEl.appendChild(totalEl);
+//   var storeHourlyStaff = function() {
+//     for (var i = 0; i < hoursOfDay.length; i++) {
+//       var storeHourlyStaffNeededEl = document.createElement('td');
+//       storeHourlyStaffNeededEl.textContent = location.employeesPerHour[i];
+//       staffHourlyRowEl.appendChild(storeHourlyStaffNeededEl);
+//     }
+//   };
+//   storeHourlyStaff();
+//   staffHourlyTableEl.appendChild(staffHourlyRowEl);
+// };
+//
+//
+//   }
+// };
+// createAllStoreStaffRows();
 
 // helper('staff', 'tr', 'I am a new table row.');
