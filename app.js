@@ -100,7 +100,7 @@ Kiosk.prototype.beansForCupsDay = function() {
 
 Kiosk.prototype.howManyBeansPerHour = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
-    this.beansPerHour.push(this.lbsPerHour[i] + this.cupBeansPerHour[i]);
+    this.beansPerHour.push(round(this.lbsPerHour[i] + this.cupBeansPerHour[i], 1));
   }
 };
 
@@ -121,6 +121,7 @@ Kiosk.prototype.howManyEmployeesPerDay = function() {
     this.employeesPerDay += this.employeesPerHour[i];
   }
 };
+
 
 Kiosk.prototype.callAllMethods = function() {
   this.avgCustPerHour();
@@ -151,112 +152,115 @@ function makeItAllHappen() {
 
 makeItAllHappen();
 
+var allCompanies = [ ];
+
+function Company(name) {
+  this.name = name;
+  this.dailyTotalBeans = 0;
+  this.hourlyTotalBeans = [ ];
+  this.totalDailyEmployees = 0;
+  this.totalHourlyEmployees = [ ];
+  allCompanies.push(this);
+};
+
+Company.prototype.dailyTotalBeansCalc = function() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    this.dailyTotalBeans += allKiosks[i].totalBeansDelivered;
+  }
+};
+
+Company.prototype.hourlyBeanTotalCalc = function() {
+  for (var i = 0; i < hoursOfDay.length; i++) {
+    var counter = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      counter += allKiosks[j].beansPerHour[i];
+    }
+    this.hourlyTotalBeans.push(round(counter, 1));
+  }
+};
+
+Company.prototype.dailyTotalStaffCalc = function() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    this.totalDailyEmployees += allKiosks[i].employeesPerDay;
+  }
+};
+
+Company.prototype.hourlyStaffTotalCalc = function() {
+  for (var i = 0; i < hoursOfDay.length; i++) {
+    var counter = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      counter += allKiosks[j].employeesPerHour[i];
+    }
+    this.totalHourlyEmployees.push(counter);
+  }
+};
+
+Company.prototype.callAllCompanyMethods = function() {
+  this.dailyTotalBeansCalc();
+  this.dailyTotalStaffCalc();
+  this.hourlyBeanTotalCalc();
+  this.hourlyStaffTotalCalc();
+};
+
+function companyCalcs() {
+  for (var i = 0; i < allCompanies.length; i++) {
+    allCompanies[i].callAllCompanyMethods();
+  }
+};
+
+new Company('Campfire Coffee');
+companyCalcs();
+
+
 function hookTheTable(idName) {
   return document.getElementById(idName);
 };
 
-function makeFirstBeansRow() {
-  var tableEl = hookTheTable('beans');
-  var headerRowEl= document.createElement('tr');
-  var blankCellEl = document.createElement('th');
-  blankCellEl.textContent = '';
-  headerRowEl.appendChild(blankCellEl);
-  var dailyLocationTotalEl = document.createElement('th');
-  dailyLocationTotalEl.textContent = 'Daily Location Total';
-  headerRowEl.appendChild(dailyLocationTotalEl);
-  var openHoursEl = function() {
-    for (var i = 0; i < hoursOfDay.length; i++) {
-      var hoursCellEl = document.createElement('th');
-      hoursCellEl.textContent = hoursOfDay[i];
-      headerRowEl.appendChild(hoursCellEl);
-    }
-  }
-  openHoursEl();
-  tableEl.appendChild(headerRowEl);
-};
-
-function makeStoreCells(storeName) {
-  var beanTableEl = hookTheTable('beans');
-  var beanRowEl = document.createElement('tr');
-  var beanNameEl = document.createElement('td');
-  beanNameEl.textContent = storeName.name;
-  beanRowEl.appendChild(beanNameEl);
-  var locationTotalEl = document.createElement('td');
-  locationTotalEl.textContent = round(storeName.totalBeansDelivered, 1);
-  beanRowEl.appendChild(locationTotalEl);
-  var storeHourBeansEl = function() {
-    for (var i = 0; i < hoursOfDay.length; i++) {
-      var storeHoulyBeansUsedEl = document.createElement('td');
-      storeHoulyBeansUsedEl.textContent = round(storeName.beansPerHour[i], 1);
-      beanRowEl.appendChild(storeHoulyBeansUsedEl);
-    }
-  }
-  storeHourBeansEl();
-  beanTableEl.appendChild(beanRowEl)
-};
-
-makeFirstBeansRow();
-
-function createAllStoreRows() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    makeStoreCells(allKiosks[i]);
-  }
-};
-createAllStoreRows();
-
-function makeFirstStaffRow() {
-  var stafftableEl = hookTheTable('staff');
-  var staffHeaderRowEl= document.createElement('tr');
-  var staffBlankCellEl = document.createElement('th');
-  staffBlankCellEl.textContent = '';
-  staffHeaderRowEl.appendChild(staffBlankCellEl);
-  var dailyTotalEl = document.createElement('th');
-  dailyTotalEl.textContent = 'Total';
-  staffHeaderRowEl.appendChild(dailyTotalEl);
-  var staffOpenHoursEl = function() {
-    for (var i = 0; i < hoursOfDay.length; i++) {
-      var hoursCellEl = document.createElement('th');
-      hoursCellEl.textContent = hoursOfDay[i];
-      staffHeaderRowEl.appendChild(hoursCellEl);
-    }
-  }
-  staffOpenHoursEl();
-  stafftableEl.appendChild(staffHeaderRowEl);
+function createParentElement(element) {
+  return document.createElement(element);
 }
 
-function makeStoreStaffCells(location) {
-  var staffHourlyTableEl = hookTheTable('staff');
-  var staffHourlyRowEl = document.createElement('tr');
-  var staffHourlyNameEl = document.createElement('td');
-  staffHourlyNameEl.textContent = location.name;
-  staffHourlyRowEl.appendChild(staffHourlyNameEl);
-  var totalEl = document.createElement('td');
-  totalEl.textContent = location.employeesPerDay;
-  staffHourlyRowEl.appendChild(totalEl);
-  var storeHourlyStaff = function() {
-    for (var i = 0; i < hoursOfDay.length; i++) {
-      var storeHourlyStaffNeededEl = document.createElement('td');
-      storeHourlyStaffNeededEl.textContent = location.employeesPerHour[i];
-      staffHourlyRowEl.appendChild(storeHourlyStaffNeededEl);
-    }
-  };
-  storeHourlyStaff();
-  staffHourlyTableEl.appendChild(staffHourlyRowEl);
-};
+function makeAnElementWithText(parent, element, content) {
+  var makeTheElement = document.createElement(element);
+  makeTheElement.textContent = content;
+  parent.appendChild(makeTheElement);
+}
 
-makeFirstStaffRow();
-
-function createAllStoreStaffRows() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    makeStoreStaffCells(allKiosks[i]);
+function loopForTableText(parent, element, content) {
+  for (var i = 0; i < hoursOfDay.length; i++) {
+    makeAnElementWithText(parent, element, content[i]);
   }
-};
-createAllStoreStaffRows();
+}
 
-// function makeAnElementWithText(parent, element, content) {
-//   var getParentElement = document.getElementById(parent);
-//   var makeTheElement = document.createElement(element);
-//   makeTheElement.textContent = content;
-//   getParentElement.appendChild(makeTheElement);
-// }
-// helper('staff', 'tr', 'I am a new table row.');
+function makeTheFirstRow(idName, tContent1, tContent2, tContent3) {
+  var tableEl = hookTheTable(idName);
+  var rowEl = createParentElement('tr');
+  makeAnElementWithText(rowEl, 'td', tContent1);
+  makeAnElementWithText(rowEl, 'td', tContent2);
+  loopForTableText(rowEl, 'td', tContent3);
+  tableEl.appendChild(rowEl);
+}
+
+makeTheFirstRow('beans', ' ', 'Daily Location Total', hoursOfDay);
+
+function makeTheStoreRows() {
+  for (var i = 0; i < allKiosks.length; i++) {
+  makeTheFirstRow('beans', allKiosks[i].name, round(allKiosks[i].totalBeansDelivered, 1), allKiosks[i].beansPerHour);
+  }
+}
+
+makeTheStoreRows();
+
+makeTheFirstRow('beans', 'Campfire Coffee Totals', allCompanies[0].dailyTotalBeans, allCompanies[0].hourlyTotalBeans);//Total Beans row
+
+makeTheFirstRow('staff', ' ', 'Total', hoursOfDay);
+
+function makeTheStaffRows() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    makeTheFirstRow('staff', allKiosks[i].name, allKiosks[i].employeesPerDay, allKiosks[i].employeesPerHour)
+  }
+}
+
+makeTheStaffRows();
+
+makeTheFirstRow('staff', 'Campfire Coffee Totals', allCompanies[0].totalDailyEmployees, allCompanies[0].totalHourlyEmployees);
