@@ -170,9 +170,12 @@ Company.prototype.dailyTotalBeansCalc = function() {
 };
 
 Company.prototype.hourlyBeanTotalCalc = function() {
-  var counter = 0;
-  for (var i = 0; i < allKiosks.length; i++) {
-    counter += allKiosks[i].beansPerHour[i]);
+  for (var i = 0; i < hoursOfDay.length; i++) {
+    var counter = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      counter += allKiosks[j].beansPerHour[i];
+    }
+    this.hourlyTotalBeans.push(round(counter, 1));
   }
 };
 
@@ -182,9 +185,21 @@ Company.prototype.dailyTotalStaffCalc = function() {
   }
 };
 
+Company.prototype.hourlyStaffTotalCalc = function() {
+  for (var i = 0; i < hoursOfDay.length; i++) {
+    var counter = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      counter += allKiosks[j].employeesPerHour[i];
+    }
+    this.totalHourlyEmployees.push(counter);
+  }
+};
+
 Company.prototype.callAllCompanyMethods = function() {
   this.dailyTotalBeansCalc();
   this.dailyTotalStaffCalc();
+  this.hourlyBeanTotalCalc();
+  this.hourlyStaffTotalCalc();
 };
 
 function companyCalcs() {
@@ -220,9 +235,9 @@ function loopForTableText(parent, element, content) {
 function makeTheFirstRow(idName, tContent1, tContent2, tContent3) {
   var tableEl = hookTheTable(idName);
   var rowEl = createParentElement('tr');
-  makeAnElementWithText(rowEl, 'th', tContent1);
-  makeAnElementWithText(rowEl, 'th', tContent2);
-  loopForTableText(rowEl, 'th', tContent3);
+  makeAnElementWithText(rowEl, 'td', tContent1);
+  makeAnElementWithText(rowEl, 'td', tContent2);
+  loopForTableText(rowEl, 'td', tContent3);
   tableEl.appendChild(rowEl);
 }
 
@@ -236,6 +251,8 @@ function makeTheStoreRows() {
 
 makeTheStoreRows();
 
+makeTheFirstRow('beans', 'Campfire Coffee Totals', allCompanies[0].dailyTotalBeans, allCompanies[0].hourlyTotalBeans);//Total Beans row
+
 makeTheFirstRow('staff', ' ', 'Total', hoursOfDay);
 
 function makeTheStaffRows() {
@@ -245,3 +262,5 @@ function makeTheStaffRows() {
 }
 
 makeTheStaffRows();
+
+makeTheFirstRow('staff', 'Campfire Coffee Totals', allCompanies[0].totalDailyEmployees, allCompanies[0].totalHourlyEmployees);
