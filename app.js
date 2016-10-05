@@ -115,17 +115,6 @@ function makeItAllHappen() {
 
 makeItAllHappen();
 
-var allCompanies = [ ];
-
-// function Company(name) {
-//   this.name = name;
-//   this.dailyTotalBeans = 0;
-//   this.hourlyTotalBeans = [ ];
-//   this.totalDailyEmployees = 0;
-//   this.totalHourlyEmployees = [ ];
-//   allCompanies.push(this);
-// };
-
 var company = {
   name: 'Campfire Coffee',
   dailyTotalBeans: 0,
@@ -215,3 +204,16 @@ function makeTheStaffRows() {
 makeTheStaffRows();
 
 createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
+
+function formSubmission(event) {
+  event.preventDefault();
+  var name = event.target.name.value;
+  var minCust = parseFloat(event.target.minCust.value);
+  var maxCust = parseFloat(event.target.maxCust.value);
+  var custCups = parseFloat(event.target.custCups.value);
+  var custLbs = parseFloat(event.target.custLbs.value);
+
+  var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
+  newPlace.callAllMethods();
+  callAllCompanyMethods();
+}
