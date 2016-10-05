@@ -214,7 +214,7 @@ companyCalcs();
 
 function hookTheTable(idName) {
   return document.getElementById(idName);
-};
+}
 
 function createParentElement(element) {
   return document.createElement(element);

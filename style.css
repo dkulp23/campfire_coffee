@@ -32,3 +32,9 @@ h3 {
 li {
   color: ##9b721e;
 }
+
+th, td {
+  width: 70px;
+  text-align: center;
+  background-color: #e3cda9;
+}
