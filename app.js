@@ -26,6 +26,9 @@ var randomInteger = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+var beansFoot = document.getElementById('beansFoot');
+var staffFoot = document.getElementById('staffFoot');
+
 var allKiosks = [ ];
 
 function Kiosk(name, minCust, maxCust, custCups, custLbs) {
@@ -215,5 +218,16 @@ function formSubmission(event) {
 
   var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
   newPlace.callAllMethods();
+
   callAllCompanyMethods();
+
+  createARow('beansBody', 'td', newPlace.name, round(newPlace.totalBeansDelivered, 1), round(newPlace.beansPerHour, 1));
+  beansFoot.innerHTML = ' ';
+  createARow('beansFoot', 'td', 'Campfire Coffee Totals', round(company.dailyTotalBeans, 1), round(company.hourlyTotalBeans, 1));
+  createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
+  staffFoot.innerHTML = ' ';
+  createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
+  event.target.name.value = null;
 }
+
+form.addEventListener('submit', formSubmission);
