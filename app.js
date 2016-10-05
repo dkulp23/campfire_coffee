@@ -117,71 +117,59 @@ makeItAllHappen();
 
 var allCompanies = [ ];
 
-function Company(name) {
-  this.name = name;
-  this.dailyTotalBeans = 0;
-  this.hourlyTotalBeans = [ ];
-  this.totalDailyEmployees = 0;
-  this.totalHourlyEmployees = [ ];
-  allCompanies.push(this);
-};
+// function Company(name) {
+//   this.name = name;
+//   this.dailyTotalBeans = 0;
+//   this.hourlyTotalBeans = [ ];
+//   this.totalDailyEmployees = 0;
+//   this.totalHourlyEmployees = [ ];
+//   allCompanies.push(this);
+// };
 
-Company.prototype.dailyTotalBeansCalc = function() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    this.dailyTotalBeans += allKiosks[i].totalBeansDelivered;
-  }
-};
-
-Company.prototype.hourlyBeanTotalCalc = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
-    var counter = 0;
-    for (var j = 0; j < allKiosks.length; j++) {
-      counter += allKiosks[j].beansPerHour[i];
+var company = {
+  name: 'Campfire Coffee',
+  dailyTotalBeans: 0,
+  hourlyTotalBeans: [ ],
+  totalDailyEmployees: 0,
+  totalHourlyEmployees: [ ],
+  dailyTotalBeansCalc: function() {
+    for (var i = 0; i < allKiosks.length; i++) {
+      this.dailyTotalBeans += allKiosks[i].totalBeansDelivered;
     }
-    this.hourlyTotalBeans.push(round(counter, 1));
-  }
-};
-
-Company.prototype.dailyTotalStaffCalc = function() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    this.totalDailyEmployees += allKiosks[i].employeesPerDay;
-  }
-};
-
-Company.prototype.hourlyStaffTotalCalc = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
-    var counter = 0;
-    for (var j = 0; j < allKiosks.length; j++) {
-      counter += allKiosks[j].employeesPerHour[i];
+  },
+  hourlyBeanTotalCalc: function() {
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      var counter = 0;
+      for (var j = 0; j < allKiosks.length; j++) {
+        counter += allKiosks[j].beansPerHour[i];
+      }
+      this.hourlyTotalBeans.push(round(counter, 1));
     }
-    this.totalHourlyEmployees.push(counter);
-  }
+  },
+  dailyTotalStaffCalc: function() {
+    for (var i = 0; i < allKiosks.length; i++) {
+      this.totalDailyEmployees += allKiosks[i].employeesPerDay;
+    }
+  },
+  hourlyStaffTotalCalc: function() {
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      var counter = 0;
+      for (var j = 0; j < allKiosks.length; j++) {
+        counter += allKiosks[j].employeesPerHour[i];
+      }
+      this.totalHourlyEmployees.push(counter);
+    }
+  },
 };
 
-Company.prototype.callAllCompanyMethods = function() {
-  this.dailyTotalBeansCalc();
-  this.dailyTotalStaffCalc();
-  this.hourlyBeanTotalCalc();
-  this.hourlyStaffTotalCalc();
+function callAllCompanyMethods() {
+  company.dailyTotalBeansCalc();
+  company.dailyTotalStaffCalc();
+  company.hourlyBeanTotalCalc();
+  company.hourlyStaffTotalCalc();
 };
 
-function companyCalcs() {
-  for (var i = 0; i < allCompanies.length; i++) {
-    allCompanies[i].callAllCompanyMethods();
-  }
-};
-
-new Company('Campfire Coffee');
-companyCalcs();
-
-
-function hookTheTable(idName) {
-  return document.getElementById(idName);
-}
-
-function createParentElement(element) {
-  return document.createElement(element);
-}
+callAllCompanyMethods();
 
 function makeAnElementWithText(parent, element, content) {
   var makeTheElement = document.createElement(element);
@@ -196,8 +184,8 @@ function loopForTableText(parent, element, content) {
 }
 
 function makeTheFirstRow(idName, tContent1, tContent2, tContent3) {
-  var tableEl = hookTheTable(idName);
-  var rowEl = createParentElement('tr');
+  var tableEl = document.getElementById(idName);
+  var rowEl = document.createElement('tr');
   makeAnElementWithText(rowEl, 'td', tContent1);
   makeAnElementWithText(rowEl, 'td', tContent2);
   loopForTableText(rowEl, 'td', tContent3);
