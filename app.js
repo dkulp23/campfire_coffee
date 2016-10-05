@@ -183,35 +183,35 @@ function loopForTableText(parent, element, content) {
   }
 }
 
-function makeTheFirstRow(idName, tContent1, tContent2, tContent3) {
+function createARow(idName, element, tContent1, tContent2, tContent3) {
   var tableEl = document.getElementById(idName);
   var rowEl = document.createElement('tr');
-  makeAnElementWithText(rowEl, 'td', tContent1);
-  makeAnElementWithText(rowEl, 'td', tContent2);
-  loopForTableText(rowEl, 'td', tContent3);
+  makeAnElementWithText(rowEl, element, tContent1);
+  makeAnElementWithText(rowEl, element, tContent2);
+  loopForTableText(rowEl, element, tContent3);
   tableEl.appendChild(rowEl);
 }
 
-makeTheFirstRow('beans', ' ', 'Daily Location Total', hoursOfDay);
+createARow('beansHead', 'th', ' ', 'Daily Location Total', hoursOfDay);
 
 function makeTheStoreRows() {
   for (var i = 0; i < allKiosks.length; i++) {
-  makeTheFirstRow('beans', allKiosks[i].name, round(allKiosks[i].totalBeansDelivered, 1), allKiosks[i].beansPerHour);
+  createARow('beansBody', 'td', allKiosks[i].name, round(allKiosks[i].totalBeansDelivered, 1), allKiosks[i].beansPerHour);
   }
 }
 
 makeTheStoreRows();
 
-makeTheFirstRow('beans', 'Campfire Coffee Totals', allCompanies[0].dailyTotalBeans, allCompanies[0].hourlyTotalBeans);//Total Beans row
+createARow('beansFoot', 'td', 'Campfire Coffee Totals', round(company.dailyTotalBeans, 1), company.hourlyTotalBeans);//Total Beans row
 
-makeTheFirstRow('staff', ' ', 'Total', hoursOfDay);
+createARow('staffHead', 'th', ' ', 'Total', hoursOfDay);
 
 function makeTheStaffRows() {
   for (var i = 0; i < allKiosks.length; i++) {
-    makeTheFirstRow('staff', allKiosks[i].name, allKiosks[i].employeesPerDay, allKiosks[i].employeesPerHour)
+    createARow('staffBody', 'td', allKiosks[i].name, allKiosks[i].employeesPerDay, allKiosks[i].employeesPerHour)
   }
 }
 
 makeTheStaffRows();
 
-makeTheFirstRow('staff', 'Campfire Coffee Totals', allCompanies[0].totalDailyEmployees, allCompanies[0].totalHourlyEmployees);
+createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
