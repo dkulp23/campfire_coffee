@@ -38,3 +38,7 @@ th, td {
   text-align: center;
   background-color: #e3cda9;
 }
+
+label, input {
+  display: block;
+}
