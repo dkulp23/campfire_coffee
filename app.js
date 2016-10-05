@@ -48,94 +48,57 @@ function Kiosk(name, minCust, maxCust, custCups, custLbs) {
   this.employeesPerHour = [ ];
   this.employeesPerDay = 0;
   allKiosks.push(this);
-};
+}
 
-Kiosk.prototype.avgCustPerHour = function() {
+Kiosk.prototype.avgCustPerHourAndTotal = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
     this.custEachHour.push(randomInteger(this.minCustPerHour, this.maxCustPerHour));
-  }
-};
-
-Kiosk.prototype.totalDailyCustomers = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
     this.totalCust += this.custEachHour[i];
   }
 };
 
-Kiosk.prototype.cupsPerHour = function() {
+Kiosk.prototype.cupsPerHourAndDailyTotal = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
     this.cupsEachHour.push(this.custEachHour[i] * this.custCupConsumption);
-  }
-};
-
-Kiosk.prototype.dailyCups = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
     this.totalCups += this.cupsEachHour[i];
   }
 };
 
-Kiosk.prototype.howManyLbsPerHour = function() {
+Kiosk.prototype.howManyLbsPerHourAndDailyTotal = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
     this.lbsPerHour.push(this.custEachHour[i] * this.custLbsConsumption);
-  }
-};
-
-Kiosk.prototype.dailyLbs = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
     this.totalLbs += this.lbsPerHour[i];
   }
 };
 
-Kiosk.prototype.beansForCupsPerHour = function() {
+Kiosk.prototype.beansForCupsPerHourAndDailyTotal = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
     this.cupBeansPerHour.push(this.cupsEachHour[i] / 16);
-  }
-};
-
-Kiosk.prototype.beansForCupsDay = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
     this.totalCupBeans += this.cupBeansPerHour[i];
   }
 };
 
-Kiosk.prototype.howManyBeansPerHour = function() {
+Kiosk.prototype.howManyBeansPerHourAndTotalBeansDelivered = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
     this.beansPerHour.push(round(this.lbsPerHour[i] + this.cupBeansPerHour[i], 1));
-  }
-};
-
-Kiosk.prototype.howManyBeansDelivered = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
     this.totalBeansDelivered += this.beansPerHour[i];
   }
 };
 
-Kiosk.prototype.howManyEmployeesPerHour = function() {
+Kiosk.prototype.howManyEmployeesPerHourAndPerDay = function() {
   for (var i = 0; i < hoursOfDay.length; i++) {
     this.employeesPerHour.push(Math.ceil(this.custEachHour[i] / 30));
-  }
-};
-
-Kiosk.prototype.howManyEmployeesPerDay = function() {
-  for (var i = 0; i < hoursOfDay.length; i++) {
     this.employeesPerDay += this.employeesPerHour[i];
   }
 };
 
-
 Kiosk.prototype.callAllMethods = function() {
-  this.avgCustPerHour();
-  this.totalDailyCustomers();
-  this.cupsPerHour();
-  this.dailyCups();
-  this.howManyLbsPerHour();
-  this.dailyLbs();
-  this.beansForCupsPerHour();
-  this.beansForCupsDay();
-  this.howManyBeansPerHour();
-  this.howManyBeansDelivered();
-  this.howManyEmployeesPerHour();
-  this.howManyEmployeesPerDay();
+  this.avgCustPerHourAndTotal();
+  this.cupsPerHourAndDailyTotal();
+  this.howManyLbsPerHourAndDailyTotal();
+  this.beansForCupsPerHourAndDailyTotal();
+  this.howManyBeansPerHourAndTotalBeansDelivered();
+  this.howManyEmployeesPerHourAndPerDay();
 };
 
 new Kiosk('Pike Place Market', 14, 35, 1.2, 0.34);
