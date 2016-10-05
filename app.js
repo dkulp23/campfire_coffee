@@ -208,6 +208,15 @@ makeTheStaffRows();
 
 createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
 
+function addNewObjectTotal(object) {
+    company.dailyTotalBeans += object.totalBeansDelivered;
+    company.totalDailyEmployees += object.employeesPerDay;
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      company.hourlyTotalBeans.push(object.beansPerHour[i]);
+      company.totalHourlyEmployees.push(object.employeesPerHour[i]);
+    }
+}
+
 function formSubmission(event) {
   event.preventDefault();
   var name = event.target.name.value;
@@ -219,15 +228,19 @@ function formSubmission(event) {
   var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
   newPlace.callAllMethods();
 
-  callAllCompanyMethods();
+  addNewObjectTotal(newPlace);
 
   createARow('beansBody', 'td', newPlace.name, newPlace.totalBeansDelivered, newPlace.beansPerHour);
   beansFoot.innerHTML = ' ';
-  createARow('beansFoot', 'td', 'Campfire Coffee Totals', company.dailyTotalBeans, company.hourlyTotalBeans);
+  createARow('beansFoot', 'td', 'Campfire Coffee Totals', round(company.dailyTotalBeans, 1), company.hourlyTotalBeans);
   createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
   staffFoot.innerHTML = ' ';
   createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
   event.target.name.value = null;
+  event.target.minCust.value = null;
+  event.target.maxCust.value = null;
+  event.target.custCups.value = null;
+  event.target.custLbs.value = null;
 }
 
 form.addEventListener('submit', formSubmission);
