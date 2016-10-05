@@ -221,9 +221,9 @@ function formSubmission(event) {
 
   callAllCompanyMethods();
 
-  createARow('beansBody', 'td', newPlace.name, round(newPlace.totalBeansDelivered, 1), round(newPlace.beansPerHour, 1));
+  createARow('beansBody', 'td', newPlace.name, newPlace.totalBeansDelivered, newPlace.beansPerHour);
   beansFoot.innerHTML = ' ';
-  createARow('beansFoot', 'td', 'Campfire Coffee Totals', round(company.dailyTotalBeans, 1), round(company.hourlyTotalBeans, 1));
+  createARow('beansFoot', 'td', 'Campfire Coffee Totals', company.dailyTotalBeans, company.hourlyTotalBeans);
   createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
   staffFoot.innerHTML = ' ';
   createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
