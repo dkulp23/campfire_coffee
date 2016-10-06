@@ -42,3 +42,7 @@ th, td {
 label, input {
   display: block;
 }
+
+tfoot td {
+  border: 2px solid #9a0008;
+}

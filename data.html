@@ -24,13 +24,13 @@
           <label for="name">Location name:</label>
           <input type="text" name="name" required="required" placeholder="Please enter location name..."/>
           <label for="minCust">Minimum customers expected per hour:</label>
-          <input type="number" name="minCust" min="0" required="required" placeholder="ex. 12"/>
+          <input type="number" step="any" name="minCust" min="0" required="required" placeholder="ex. 12"/>
           <label for="maxCust">Maximum customers expected per hour:</label>
-          <input type="number" name="maxCust" min="0" required="required" placeholder="ex. 42"/>
+          <input type="number" step="any" name="maxCust" min="0" required="required" placeholder="ex. 42"/>
           <label for="custCups">Average cups sold per customer:</label>
-          <input type="number" name="custCups" required="required" placeholder="ex. 1.6"/>
+          <input type="number" step="any" name="custCups" required="required" placeholder="ex. 1.6"/>
           <label for="custLbs">Average pounds sold to go per customer:</label>
-          <input type="number" name="custLbs" required="required" placeholder="0.7">
+          <input type="number" step="any" name="custLbs" required="required" placeholder="0.7">
           <input type="submit" name="submitInfo" value="Create New Kiosk Location">
         </fieldset>
       </form>
@@ -41,7 +41,6 @@
         <thead id="beansHead"></thead>
         <tbody id="beansBody"></tbody>
         <tfoot id="beansFoot"></tfoot>
-        </thead>
       </table>
       <h1>Staff Needed in Stores and Company Wide</h1>
       <table id="staff">
