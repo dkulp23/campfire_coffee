@@ -215,16 +215,17 @@ function zeroTotals() {
   company.totalHourlyEmployees = [ ];
 }
 
-// function findNameinExistingArray(nameValue) {
-//   for (var i = 0; i < allKiosks.length; i++) {
-//     if (allKiosks[i].name.indexOf(nameValue) > -1) {
-//       var existingArray = allKiosks[i];
-//       return existingArray;
-//     } else {
-//       return false;
-//     }
-//   }
-// }
+function findNameinExistingArray(nameValue) {
+  for (var i = 0; i < allKiosks.length; i++) {
+    if (allKiosks[i].name.indexOf(nameValue) > -1) {
+      return [i];
+    }
+  }
+}
+
+function removeOldItem(nameValue) {
+  allKiosks.splice(findNameinExistingArray(nameValue), 1);
+}
 
 function formSubmission(event) {
   event.preventDefault();
@@ -233,6 +234,8 @@ function formSubmission(event) {
   var maxCust = parseFloat(event.target.maxCust.value);
   var custCups = parseFloat(event.target.custCups.value);
   var custLbs = parseFloat(event.target.custLbs.value);
+
+  removeOldItem(name);
 
   // function updateExistingArray(nameValue) {
   //   for (var i = 0; i < allKiosks.length; i++) {
