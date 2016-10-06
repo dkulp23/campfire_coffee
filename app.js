@@ -26,6 +26,9 @@ var randomInteger = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+var beansFoot = document.getElementById('beansFoot');
+var staffFoot = document.getElementById('staffFoot');
+
 var allKiosks = [ ];
 
 function Kiosk(name, minCust, maxCust, custCups, custLbs) {
@@ -114,17 +117,6 @@ function makeItAllHappen() {
 };
 
 makeItAllHappen();
-
-var allCompanies = [ ];
-
-// function Company(name) {
-//   this.name = name;
-//   this.dailyTotalBeans = 0;
-//   this.hourlyTotalBeans = [ ];
-//   this.totalDailyEmployees = 0;
-//   this.totalHourlyEmployees = [ ];
-//   allCompanies.push(this);
-// };
 
 var company = {
   name: 'Campfire Coffee',
@@ -215,3 +207,61 @@ function makeTheStaffRows() {
 makeTheStaffRows();
 
 createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
+
+function addNewObjectTotal(object) {
+    company.dailyTotalBeans += object.totalBeansDelivered;
+    company.totalDailyEmployees += object.employeesPerDay;
+    for (var i = 0; i < hoursOfDay.length; i++) {
+      company.hourlyTotalBeans.push(object.beansPerHour[i]);
+      company.totalHourlyEmployees.push(object.employeesPerHour[i]);
+    }
+}
+
+function findNameinExistingArray(nameValue) {
+  for (var i = 0; i < allKiosks.length; i++) {
+    if (allKiosks[i].name === nameValue) {
+      var existingObject = allKiosks[i];
+      return true;
+      return allKiosks[i];
+    } else {
+      return false;
+    }
+  }
+}
+
+function formSubmission(event) {
+  event.preventDefault();
+  var name = event.target.name.value;
+  var minCust = parseFloat(event.target.minCust.value);
+  var maxCust = parseFloat(event.target.maxCust.value);
+  var custCups = parseFloat(event.target.custCups.value);
+  var custLbs = parseFloat(event.target.custLbs.value);
+
+  function updateExistingArray() {
+    if (findNameinExistingArray(name)) {
+      console.log(allKiosks[i]);
+    } else {
+      console.log('something is wrong')
+    }
+  }
+  updateExistingArray();
+
+  var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
+  newPlace.callAllMethods();
+
+  addNewObjectTotal(newPlace);
+
+  createARow('beansBody', 'td', newPlace.name, newPlace.totalBeansDelivered, newPlace.beansPerHour);
+  beansFoot.innerHTML = ' ';
+  createARow('beansFoot', 'td', 'Campfire Coffee Totals', round(company.dailyTotalBeans, 1), company.hourlyTotalBeans);
+  createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
+  staffFoot.innerHTML = ' ';
+  createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
+  event.target.name.value = null;
+  event.target.minCust.value = null;
+  event.target.maxCust.value = null;
+  event.target.custCups.value = null;
+  event.target.custLbs.value = null;
+}
+
+form.addEventListener('submit', formSubmission);
