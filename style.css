@@ -37,6 +37,7 @@ th, td {
   width: 70px;
   text-align: center;
   background-color: #e3cda9;
+  border-radius: 40%;
 }
 
 label, input {
