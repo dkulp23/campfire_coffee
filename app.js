@@ -217,6 +217,18 @@ function addNewObjectTotal(object) {
     }
 }
 
+function findNameinExistingArray(nameValue) {
+  for (var i = 0; i < allKiosks.length; i++) {
+    if (allKiosks[i].name === nameValue) {
+      var existingObject = allKiosks[i];
+      return true;
+      return allKiosks[i];
+    } else {
+      return false;
+    }
+  }
+}
+
 function formSubmission(event) {
   event.preventDefault();
   var name = event.target.name.value;
@@ -224,6 +236,15 @@ function formSubmission(event) {
   var maxCust = parseFloat(event.target.maxCust.value);
   var custCups = parseFloat(event.target.custCups.value);
   var custLbs = parseFloat(event.target.custLbs.value);
+
+  function updateExistingArray() {
+    if (findNameinExistingArray(name)) {
+      console.log(allKiosks[i]);
+    } else {
+      console.log('something is wrong')
+    }
+  }
+  updateExistingArray();
 
   var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
   newPlace.callAllMethods();
