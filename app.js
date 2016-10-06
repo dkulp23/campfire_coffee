@@ -208,26 +208,23 @@ makeTheStaffRows();
 
 createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
 
-function addNewObjectTotal(object) {
-    company.dailyTotalBeans += object.totalBeansDelivered;
-    company.totalDailyEmployees += object.employeesPerDay;
-    for (var i = 0; i < hoursOfDay.length; i++) {
-      company.hourlyTotalBeans.push(object.beansPerHour[i]);
-      company.totalHourlyEmployees.push(object.employeesPerHour[i]);
-    }
+function zeroTotals() {
+  company.dailyTotalBeans = 0;
+  company.hourlyTotalBeans = [ ];
+  company.totalDailyEmployees = 0;
+  company.totalHourlyEmployees = [ ];
 }
 
-function findNameinExistingArray(nameValue) {
-  for (var i = 0; i < allKiosks.length; i++) {
-    if (allKiosks[i].name === nameValue) {
-      var existingObject = allKiosks[i];
-      return true;
-      return allKiosks[i];
-    } else {
-      return false;
-    }
-  }
-}
+// function findNameinExistingArray(nameValue) {
+//   for (var i = 0; i < allKiosks.length; i++) {
+//     if (allKiosks[i].name.indexOf(nameValue) > -1) {
+//       var existingArray = allKiosks[i];
+//       return existingArray;
+//     } else {
+//       return false;
+//     }
+//   }
+// }
 
 function formSubmission(event) {
   event.preventDefault();
@@ -237,19 +234,22 @@ function formSubmission(event) {
   var custCups = parseFloat(event.target.custCups.value);
   var custLbs = parseFloat(event.target.custLbs.value);
 
-  function updateExistingArray() {
-    if (findNameinExistingArray(name)) {
-      console.log(allKiosks[i]);
-    } else {
-      console.log('something is wrong')
-    }
-  }
-  updateExistingArray();
-
+  // function updateExistingArray(nameValue) {
+  //   for (var i = 0; i < allKiosks.length; i++) {
+  //     if (allKiosks[i].name.indexOf(nameValue) > -1) {
+  //     console.log(allKiosks[i]);
+  //     } else {
+  //     console.log('something is wrong')
+  //     }
+  //   }
+  // }
+  // updateExistingArray(name);
+  //
   var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
   newPlace.callAllMethods();
 
-  addNewObjectTotal(newPlace);
+  zeroTotals();
+  callAllCompanyMethods();
 
   createARow('beansBody', 'td', newPlace.name, newPlace.totalBeansDelivered, newPlace.beansPerHour);
   beansFoot.innerHTML = ' ';
