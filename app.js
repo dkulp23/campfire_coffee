@@ -215,16 +215,41 @@ function zeroTotals() {
   company.totalHourlyEmployees = [ ];
 }
 
-// function findNameinExistingArray(nameValue) {
-//   for (var i = 0; i < allKiosks.length; i++) {
-//     if (allKiosks[i].name.indexOf(nameValue) > -1) {
-//       var existingArray = allKiosks[i];
-//       return existingArray;
-//     } else {
-//       return false;
-//     }
-//   }
-// }
+
+function updateExistingObjectValues(obj) {
+  obj.minCustPerHour = parseFloat(event.target.minCust.value);
+  obj.maxCustPerHour = parseFloat(event.target.maxCust.value);
+  obj.custCupConsumption = parseFloat(event.target.custCups.value);
+  obj.custLbsConsumption = parseFloat(event.target.custLbs.value);
+  obj.custEachHour = [ ];
+  obj.totalCust = 0;
+  obj.cupsEachHour = [ ];
+  obj.totalCups = 0;
+  obj.lbsPerHour = [ ];
+  obj.totalLbs = 0;
+  obj.lbPackages = 0;
+  obj.cupBeansPerHour = [ ];
+  obj.totalCupBeans = 0;
+  obj.beansPerHour = [ ];
+  obj.totalBeansDelivered = 0;
+  obj.employeesPerHour = [ ];
+  obj.employeesPerDay = 0;
+}
+
+function findNameinExistingArray(nameValue) {
+  for (var i = 0; i < allKiosks.length; i++) {
+    if (allKiosks[i].name.indexOf(nameValue) > -1) {
+      return [i];
+    }
+  }
+}
+
+function createUpdatedRow(idName, element, tContent1, tContent2, tContent3) {
+  var rowEl = document.getElementById(idName);
+  makeAnElementWithText(rowEl, element, tContent1);
+  makeAnElementWithText(rowEl, element, tContent2);
+  loopForTableText(rowEl, element, tContent3);
+}
 
 function formSubmission(event) {
   event.preventDefault();
@@ -234,27 +259,36 @@ function formSubmission(event) {
   var custCups = parseFloat(event.target.custCups.value);
   var custLbs = parseFloat(event.target.custLbs.value);
 
-  // function updateExistingArray(nameValue) {
-  //   for (var i = 0; i < allKiosks.length; i++) {
-  //     if (allKiosks[i].name.indexOf(nameValue) > -1) {
-  //     console.log(allKiosks[i]);
-  //     } else {
-  //     console.log('something is wrong')
-  //     }
-  //   }
-  // }
-  // updateExistingArray(name);
-  //
-  var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
-  newPlace.callAllMethods();
+  function doesItExist(obj) {
+    if (findNameinExistingArray(obj) > -1) {
+      var newInstance = findNameinExistingArray(obj);
+      updateExistingObjectValues(allKiosks[newInstance]);
+      allKiosks[newInstance].callAllMethods();
+      // beansBody.children[newInstance].innerHTML = ' ';
+      // staffBody.children[newInstance].innerHTML = ' ';
+      var beansElement = beansBody.children[newInstance];
+      var staffElement = staffBody.children[newInstance];
+      beansElement.innerHTML = ' ';
+      staffElement.innerHTML = ' ';
+      beansElement.setAttribute('id', 'updatedBeansRow');
+      staffElement.setAttribute('id', 'updatedStaffRow');
+      createUpdatedRow('updatedBeansRow', 'td', allKiosks[newInstance].name, round(allKiosks[newInstance].totalBeansDelivered, 1), allKiosks[newInstance].beansPerHour);
+      createUpdatedRow('updatedStaffRow', 'td', allKiosks[newInstance].name, allKiosks[newInstance].employeesPerDay, allKiosks[newInstance].employeesPerHour);
+    } else {
+      var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
+      newPlace.callAllMethods();
+      createARow('beansBody', 'td', newPlace.name, round(newPlace.totalBeansDelivered, 1), newPlace.beansPerHour);
+      createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
+    }
+  }
+
+  doesItExist(name);
 
   zeroTotals();
   callAllCompanyMethods();
 
-  createARow('beansBody', 'td', newPlace.name, round(newPlace.totalBeansDelivered, 1), newPlace.beansPerHour);
   beansFoot.innerHTML = ' ';
   createARow('beansFoot', 'td', 'Campfire Coffee Totals', round(company.dailyTotalBeans, 1), company.hourlyTotalBeans);
-  createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
   staffFoot.innerHTML = ' ';
   createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
   event.target.name.value = null;
