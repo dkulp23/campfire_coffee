@@ -215,6 +215,35 @@ function zeroTotals() {
   company.totalHourlyEmployees = [ ];
 }
 
+
+function updateExistingObjectValues(obj) {
+  obj.minCustPerHour = parseFloat(event.target.minCust.value);
+  obj.maxCustPerHour = parseFloat(event.target.maxCust.value);
+  obj.custCupConsumption = parseFloat(event.target.custCups.value);
+  obj.custLbsConsumption = parseFloat(event.target.custLbs.value);
+  obj.custEachHour = [ ];
+  obj.totalCust = 0;
+  obj.cupsEachHour = [ ];
+  obj.totalCups = 0;
+  obj.lbsPerHour = [ ];
+  obj.totalLbs = 0;
+  obj.lbPackages = 0;
+  obj.cupBeansPerHour = [ ];
+  obj.totalCupBeans = 0;
+  obj.beansPerHour = [ ];
+  obj.totalBeansDelivered = 0;
+  obj.employeesPerHour = [ ];
+  obj.employeesPerDay = 0;
+}
+
+// allKiosks[i].name = event.target.name.value;
+// zeroExistingObjectValues(allKiosks[i]);
+// allKiosks[i].callAllMethods();
+// createARow('beansBody', 'td', allKiosks[i].name, round(allKiosks[i].totalBeansDelivered, 1), allKiosks[i].beansPerHour);
+// createARow('staffBody', 'td', allKiosks[i].name, allKiosks[i].employeesPerDay, allKiosks[i].employeesPerHour);
+// }
+// }
+
 function findNameinExistingArray(nameValue) {
   for (var i = 0; i < allKiosks.length; i++) {
     if (allKiosks[i].name.indexOf(nameValue) > -1) {
@@ -223,9 +252,6 @@ function findNameinExistingArray(nameValue) {
   }
 }
 
-function removeOldItem(nameValue) {
-  allKiosks.splice(findNameinExistingArray(nameValue), 1);
-}
 
 function formSubmission(event) {
   event.preventDefault();
@@ -235,7 +261,26 @@ function formSubmission(event) {
   var custCups = parseFloat(event.target.custCups.value);
   var custLbs = parseFloat(event.target.custLbs.value);
 
-  removeOldItem(name);
+  function doesItExist(obj) {
+    if (findNameinExistingArray(obj) > -1) {
+      var newInstance = findNameinExistingArray(obj);
+      updateExistingObjectValues(allKiosks[newInstance]);
+      allKiosks[newInstance].callAllMethods();
+    } else {
+      var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
+      newPlace.callAllMethods();
+      createARow('beansBody', 'td', newPlace.name, round(newPlace.totalBeansDelivered, 1), newPlace.beansPerHour);
+      createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
+    }
+  }
+
+  doesItExist(name);
+  // findNameinExistingArray(name);
+  // function replaceOldItem(nameValue) {
+  //   allKiosks.splice(findNameinExistingArray(nameValue), 1, newPlace);
+  // }
+  //
+  // replaceOldItem(name);
 
   // function updateExistingArray(nameValue) {
   //   for (var i = 0; i < allKiosks.length; i++) {
@@ -248,16 +293,12 @@ function formSubmission(event) {
   // }
   // updateExistingArray(name);
   //
-  var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
-  newPlace.callAllMethods();
 
   zeroTotals();
   callAllCompanyMethods();
 
-  createARow('beansBody', 'td', newPlace.name, round(newPlace.totalBeansDelivered, 1), newPlace.beansPerHour);
   beansFoot.innerHTML = ' ';
   createARow('beansFoot', 'td', 'Campfire Coffee Totals', round(company.dailyTotalBeans, 1), company.hourlyTotalBeans);
-  createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
   staffFoot.innerHTML = ' ';
   createARow('staffFoot', 'td', 'Campfire Coffee Totals', company.totalDailyEmployees, company.totalHourlyEmployees);
   event.target.name.value = null;
