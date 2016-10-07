@@ -236,14 +236,6 @@ function updateExistingObjectValues(obj) {
   obj.employeesPerDay = 0;
 }
 
-// allKiosks[i].name = event.target.name.value;
-// zeroExistingObjectValues(allKiosks[i]);
-// allKiosks[i].callAllMethods();
-// createARow('beansBody', 'td', allKiosks[i].name, round(allKiosks[i].totalBeansDelivered, 1), allKiosks[i].beansPerHour);
-// createARow('staffBody', 'td', allKiosks[i].name, allKiosks[i].employeesPerDay, allKiosks[i].employeesPerHour);
-// }
-// }
-
 function findNameinExistingArray(nameValue) {
   for (var i = 0; i < allKiosks.length; i++) {
     if (allKiosks[i].name.indexOf(nameValue) > -1) {
@@ -251,7 +243,6 @@ function findNameinExistingArray(nameValue) {
     }
   }
 }
-
 
 function formSubmission(event) {
   event.preventDefault();
@@ -266,6 +257,7 @@ function formSubmission(event) {
       var newInstance = findNameinExistingArray(obj);
       updateExistingObjectValues(allKiosks[newInstance]);
       allKiosks[newInstance].callAllMethods();
+      beansBody.children[newInstance].innerHTML = ' ';
     } else {
       var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
       newPlace.callAllMethods();
@@ -275,24 +267,6 @@ function formSubmission(event) {
   }
 
   doesItExist(name);
-  // findNameinExistingArray(name);
-  // function replaceOldItem(nameValue) {
-  //   allKiosks.splice(findNameinExistingArray(nameValue), 1, newPlace);
-  // }
-  //
-  // replaceOldItem(name);
-
-  // function updateExistingArray(nameValue) {
-  //   for (var i = 0; i < allKiosks.length; i++) {
-  //     if (allKiosks[i].name.indexOf(nameValue) > -1) {
-  //     console.log(allKiosks[i]);
-  //     } else {
-  //     console.log('something is wrong')
-  //     }
-  //   }
-  // }
-  // updateExistingArray(name);
-  //
 
   zeroTotals();
   callAllCompanyMethods();
