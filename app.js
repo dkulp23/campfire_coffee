@@ -244,6 +244,13 @@ function findNameinExistingArray(nameValue) {
   }
 }
 
+function createUpdatedRow(idName, element, tContent1, tContent2, tContent3) {
+  var rowEl = document.getElementById(idName);
+  makeAnElementWithText(rowEl, element, tContent1);
+  makeAnElementWithText(rowEl, element, tContent2);
+  loopForTableText(rowEl, element, tContent3);
+}
+
 function formSubmission(event) {
   event.preventDefault();
   var name = event.target.name.value;
@@ -257,7 +264,16 @@ function formSubmission(event) {
       var newInstance = findNameinExistingArray(obj);
       updateExistingObjectValues(allKiosks[newInstance]);
       allKiosks[newInstance].callAllMethods();
-      beansBody.children[newInstance].innerHTML = ' ';
+      // beansBody.children[newInstance].innerHTML = ' ';
+      // staffBody.children[newInstance].innerHTML = ' ';
+      var beansElement = beansBody.children[newInstance];
+      var staffElement = staffBody.children[newInstance];
+      beansElement.innerHTML = ' ';
+      staffElement.innerHTML = ' ';
+      beansElement.setAttribute('id', 'updatedBeansRow');
+      staffElement.setAttribute('id', 'updatedStaffRow');
+      createUpdatedRow('updatedBeansRow', 'td', allKiosks[newInstance].name, round(allKiosks[newInstance].totalBeansDelivered, 1), allKiosks[newInstance].beansPerHour);
+      createUpdatedRow('updatedStaffRow', 'td', allKiosks[newInstance].name, allKiosks[newInstance].employeesPerDay, allKiosks[newInstance].employeesPerHour);
     } else {
       var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
       newPlace.callAllMethods();
