@@ -1,0 +1,36 @@
+body {
+  background-color: #78b3a5;
+  font-family: 'Cabin Sketch', cursive;
+}
+
+header img {
+  display: block;
+  margin: 0 auto;
+}
+
+header h1 {
+  font-size: 100px;
+  color: rgba(154, 0, 8, 0.60);
+  text-align: center;
+}
+
+nav ul {
+  width: 500px;
+  margin: 0 auto;
+}
+.navList {
+  display: inline;
+  padding: 0 15px;
+}
+
+nav a {
+  color: rgba(154, 0, 8, 0.60);
+  text-decoration: none;
+}
+
+#about {
+  width: 75%;
+  margin: 10px 0px 0px 0px;
+  padding: 5px;
+  background-color: #e3cda9;
+}
