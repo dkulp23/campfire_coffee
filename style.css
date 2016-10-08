@@ -23,14 +23,15 @@ section {
   margin: 0 auto;*/
 }
 
-h3 {
-  width: 550px;
-  text-align: center;
-  color: #9a0008;
+form {
+  width: 350px;
+  margin: 0 auto;
 }
 
-li {
-  color: ##9b721e;
+h1 {
+  width: 100%;
+  text-align: center;
+  color: #9a0008;
 }
 
 th, td {
@@ -38,7 +39,11 @@ th, td {
   height: 70px;
   text-align: center;
   background-color: #e3cda9;
-  border-radius: 40%;
+  border-radius: 5%;
+}
+
+tr:nth-of-type(odd) {
+  background-color: #9b721e;
 }
 
 label, input {
