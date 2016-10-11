@@ -264,8 +264,6 @@ function formSubmission(event) {
       var newInstance = findNameinExistingArray(obj);
       updateExistingObjectValues(allKiosks[newInstance]);
       allKiosks[newInstance].callAllMethods();
-      // beansBody.children[newInstance].innerHTML = ' ';
-      // staffBody.children[newInstance].innerHTML = ' ';
       var beansElement = beansBody.children[newInstance];
       var staffElement = staffBody.children[newInstance];
       beansElement.innerHTML = ' ';
