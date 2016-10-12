@@ -264,8 +264,6 @@ function formSubmission(event) {
       var newInstance = findNameinExistingArray(obj);
       updateExistingObjectValues(allKiosks[newInstance]);
       allKiosks[newInstance].callAllMethods();
-      // beansBody.children[newInstance].innerHTML = ' ';
-      // staffBody.children[newInstance].innerHTML = ' ';
       var beansElement = beansBody.children[newInstance];
       var staffElement = staffBody.children[newInstance];
       beansElement.innerHTML = ' ';
@@ -274,6 +272,14 @@ function formSubmission(event) {
       staffElement.setAttribute('id', 'updatedStaffRow');
       createUpdatedRow('updatedBeansRow', 'td', allKiosks[newInstance].name, round(allKiosks[newInstance].totalBeansDelivered, 1), allKiosks[newInstance].beansPerHour);
       createUpdatedRow('updatedStaffRow', 'td', allKiosks[newInstance].name, allKiosks[newInstance].employeesPerDay, allKiosks[newInstance].employeesPerHour);
+      var ulEl = document.getElementById('storeLocations');
+      var listContent = ulEl.innerHTML;
+      function addHTML() {
+        for (var i = 0; i < allKiosks.length; i++) {
+          listContent = "<li>allKiosks[i]</li>";
+        }
+      }
+      addHTML();
     } else {
       var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
       newPlace.callAllMethods();
