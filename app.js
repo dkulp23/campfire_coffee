@@ -272,19 +272,12 @@ function formSubmission(event) {
       staffElement.setAttribute('id', 'updatedStaffRow');
       createUpdatedRow('updatedBeansRow', 'td', allKiosks[newInstance].name, round(allKiosks[newInstance].totalBeansDelivered, 1), allKiosks[newInstance].beansPerHour);
       createUpdatedRow('updatedStaffRow', 'td', allKiosks[newInstance].name, allKiosks[newInstance].employeesPerDay, allKiosks[newInstance].employeesPerHour);
-      var ulEl = document.getElementById('storeLocations');
-      var listContent = ulEl.innerHTML;
-      function addHTML() {
-        for (var i = 0; i < allKiosks.length; i++) {
-          listContent = "<li>allKiosks[i]</li>";
-        }
-      }
-      addHTML();
     } else {
       var newPlace = new Kiosk(name, minCust, maxCust, custCups, custLbs);
       newPlace.callAllMethods();
       createARow('beansBody', 'td', newPlace.name, round(newPlace.totalBeansDelivered, 1), newPlace.beansPerHour);
       createARow('staffBody', 'td', newPlace.name, newPlace.employeesPerDay, newPlace.employeesPerHour);
+      localStorage.setItem('name', name);
     }
   }
 
