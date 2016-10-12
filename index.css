@@ -3,6 +3,10 @@ body {
   font-family: 'Cabin Sketch', cursive;
 }
 
+header {
+  padding-bottom: 20px;
+}
+
 header img {
   display: block;
   margin: 0 auto;
@@ -18,9 +22,21 @@ nav ul {
   width: 500px;
   margin: 0 auto;
 }
-.navList {
-  display: inline;
-  padding: 0 15px;
+
+section {
+  width: 60%;
+  float: left;
+}
+
+aside {
+  width: 30%;
+  float: right;
+}
+
+footer {
+  width: 100%;
+  float: right;
+  clear: right;
 }
 
 nav a {
@@ -28,9 +44,68 @@ nav a {
   text-decoration: none;
 }
 
-#about {
+aside h3 {
+  width: 250px;
+  margin: 0 auto;
+}
+
+ul {
+  width: 200px;
+  margin: 0 auto;
+  padding-left: 0px;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+.navList {
+  display: inline;
+  padding: 0 15px;
+}
+
+.mainArticle {
   width: 75%;
-  margin: 10px 0px 0px 0px;
   padding: 5px;
   background-color: #e3cda9;
+  margin: 0 auto;
+}
+
+
+.footerInfo {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#wrapper {
+  overflow: auto;
+  width: 100%;
+}
+
+#familyPhoto {
+  display: block;
+  margin: 0 auto;
+}
+
+#contact {
+  overflow: auto;
+  width: 50%;
+  margin: 0 auto;
+}
+
+#email {
+  width: 100px;
+  float: left;
+}
+
+#phone {
+  width: 100px;
+  float: right;
+}
+
+#cell {
+  width: 100px;
+  float: left;
+  margin-left: 100px;
 }
