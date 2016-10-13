@@ -1,3 +1,32 @@
+# Style Guide for Campfire Coffee sites
+
+### Font:
+
+Since Jo wanted to evoke the feeling of going camping, I chose the Cabin Sketch font available in Google Fonts.
+
+I chose to render the text in the header as red to make it stand out.
+
+### Color:
+
+I downloaded a color swatch of the colors used in the Wes Anderson film, Moonrise Kingdom.
+I was able to extract the hex codes using the Colorzilla application in Chrome.
+
+### Misc:
+
+I wanted to use this project as a chance to try out as many things as possible.
+I was surprised by how easy it was to embed the Google Maps iframes for the store locations.
+I also wanted to play around with using PNG files for the different contacts in the footer.
+
+In the end I spent most of my time developing and refining the Javascript for this project.
+I am especially excited that I was able to complete the stretch goals that were proposed to me.
+The first was to create helper functions that would take parameters in order to make creating the rows easier.
+The second was to have the event handler update an existing instance of a Kiosk object if the name value had already been assigned. This then would update the Company object and then update the existing row in the table rather than append a new one. The conditional also allowed for a new Kiosk object instance to be created if the name value did not exist.
+The last (self-assigned) goal was to explore the local storage API to allow me to update the index page list of locations in the aside if a new location was created in the form on the data page.
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 # campfire_coffee
 Lab assignment for CodeFellows 201
 
