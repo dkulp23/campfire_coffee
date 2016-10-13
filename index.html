@@ -50,6 +50,7 @@
           <li><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10755.81892553348!2d-122.34553821677858!3d47.62701121534024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153bc67a5d5b%3A0xa91e9c10a999a3be!2sSouth+Lake+Union%2C+Seattle%2C+WA!5e0!3m2!1sen!2sus!4v1476240627089" width="200" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></li>
           <li>Sea-Tac Airport</li>
           <li><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2698.0353745388084!2d-122.31101054878637!3d47.45024987907241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490435542eafefd%3A0x99d3d9c4c7dc37b7!2sSeattle-Tacoma+International+Airport!5e0!3m2!1sen!2sus!4v1476240702024" width="200" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></li>
+          <li id="newStore"></li>
         </ul>
       </aside>
       <footer>
@@ -71,5 +72,12 @@
         <div class="footerInfo">Icons made by <a href="http://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
       </footer>
     </div> <!--wrapper-->
+  <script type="text/javascript">
+    function updateNewStore() {
+      var liEl = document.getElementById('newStore');
+      liEl.textContent = 'Also come check out our new store in: ' + localStorage.name;
+    }
+    updateNewStore();
+  </script>
   </body>
 </html>

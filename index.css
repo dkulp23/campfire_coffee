@@ -59,6 +59,11 @@ ul li {
   list-style-type: none;
 }
 
+aside li {
+  border: 2px solid #e3cda9;
+  text-align: center;
+}
+
 .navList {
   display: inline;
   padding: 0 15px;
@@ -85,7 +90,14 @@ ul li {
 
 #familyPhoto {
   display: block;
-  margin: 0 auto;
+  margin: 20px auto;
+}
+
+#newStore {
+  margin-top: 10px;
+  background-color: rgba(154, 0, 8, 0.60);
+  color: #e3cda9;
+  padding: 4px;
 }
 
 #contact {
